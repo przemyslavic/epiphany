@@ -4,6 +4,8 @@ trigger:
     include:
     - develop
 
+pr: none
+
 pool:
   name: $(poolName)
   
