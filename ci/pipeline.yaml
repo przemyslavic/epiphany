@@ -41,3 +41,5 @@ jobs:
       searchFolder: $(System.DefaultWorkingDirectory)/tests/results
       failTaskOnFailedTests: true
       testRunTitle: Python unit tests for Epicli
+
+###
