@@ -21,7 +21,9 @@ jobs:
       targetType: inline
       script: >
         python -m pip install --upgrade pip
+
         python -m ensurepip --upgrade
+
         python -m pip install pytest jinja2 boto3  jsonschema python-json-logger pytest_mock pyyaml wheel setuptools twine ruamel.yaml
   - task: Bash@3
     displayName: Run unit tests
@@ -30,6 +32,7 @@ jobs:
       targetType: inline
       script: >-
         cd $(System.DefaultWorkingDirectory)
+        
         python -m pytest --junit-xml=tests/results/result.xml
   - task: PublishTestResults@2
     displayName: Publish Test Results
