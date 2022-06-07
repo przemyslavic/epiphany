@@ -1,0 +1,39 @@
+---
+trigger:
+  branches:
+    include:
+    - develop
+
+pool:
+  name: $(poolName)
+  
+jobs:
+- job: Run_unit_tests
+  displayName: Run unit tests
+  steps:
+  - task: UsePythonVersion@0
+    displayName: Use Python 3.10
+    inputs:
+      versionSpec: 3.10
+  - task: Bash@3
+    displayName: Install Python dependencies
+    inputs:
+      targetType: inline
+      script: >
+        python -m ensurepip --upgrade
+        python -m pip install pytest jinja2 boto3  jsonschema python-json-logger pytest_mock pyyaml wheel setuptools twine ruamel.yaml
+  - task: Bash@3
+    displayName: Run unit tests
+    continueOnError: true
+    inputs:
+      targetType: inline
+      script: >-
+        cd $(System.DefaultWorkingDirectory)
+        python -m pytest --junit-xml=tests/results/result.xml
+  - task: PublishTestResults@2
+    displayName: Publish Test Results
+    inputs:
+      testResultsFiles: '*.xml'
+      searchFolder: $(System.DefaultWorkingDirectory)/tests/results
+      failTaskOnFailedTests: true
+      testRunTitle: Python unit tests for Epicli
