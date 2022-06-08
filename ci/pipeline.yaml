@@ -30,7 +30,7 @@ jobs:
       script: >
         python -m ensurepip --upgrade
         
-        python -m boto3 jinja2 jsonschema pytest pytest_mock python-json-logger pyyaml ruamel.yaml setuptools twine wheel
+        python -m pip install boto3 jinja2 jsonschema pytest pytest_mock python-json-logger pyyaml ruamel.yaml setuptools twine wheel
   - task: Bash@3
     displayName: Run unit tests
     continueOnError: true
