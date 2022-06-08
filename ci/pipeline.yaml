@@ -7,7 +7,7 @@ pr:
   branches:
     include:
     - develop
-    
+
 pool:
   name: $(poolName)
 
@@ -28,16 +28,14 @@ jobs:
     inputs:
       targetType: inline
       script: |
-        set -o pipefail &&
-        python -m ensurepip --upgrade
-        python -m pip install boto3 jinja2 jsonschema pytest pytest_mock python-json-logger pyyaml ruamel.yaml setuptools twine wheel
+        pip install boto3 jinja2 jsonschema pytest pytest_mock python-json-logger pyyaml ruamel.yaml setuptools twine wheel
   - task: Bash@3
     displayName: Run unit tests
     continueOnError: true
     inputs:
       targetType: inline
       script: |
-        python -m pytest --junit-xml=tests/results/result.xml
+        pytest --junit-xml=tests/results/result.xml
   - task: PublishTestResults@2
     displayName: Publish Test Results
     inputs:
@@ -54,7 +52,7 @@ jobs:
     displayName: Display image tags
     inputs:
       script: |
-        echo "image tags: $(containerRegistry)/$(repository):$(tags)"
+        echo Image tags: $(containerRegistry)/$(repository):$(tags)
   - task: Docker@2
     displayName: Build the image
     inputs:
