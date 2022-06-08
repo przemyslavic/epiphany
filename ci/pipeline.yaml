@@ -11,6 +11,10 @@ pr:
 pool:
   name: $(poolName)
 
+variables:
+  repository: epicli
+  tags: $(Build.SourceBranchName).$(Build.BuildId)
+
 jobs:
 - job: Run_unit_tests
   displayName: Run unit tests
@@ -26,7 +30,7 @@ jobs:
       script: >
         python -m ensurepip --upgrade
         
-        python -m pip install boto3 jinja2 jsonschema pytest python-json-logger pytest_mock pyyaml wheel setuptools twine ruamel.yaml
+        python -m boto3 jinja2 jsonschema pytest pytest_mock python-json-logger pyyaml ruamel.yaml setuptools twine wheel
   - task: Bash@3
     displayName: Run unit tests
     continueOnError: true
@@ -46,18 +50,23 @@ jobs:
   dependsOn:
   - Run_unit_tests
   steps:
+  - task: CmdLine@2
+    displayName: Display image tags
+    inputs:
+      script: >
+        echo "image tags: $(containerRegistry)/$(repository):$(tags)"
   - task: Docker@2
     displayName: Build image
     inputs:
       containerRegistry: $(containerRegistry)
-      repository: epicli
+      repository: $(repository)
       command: build
       Dockerfile: Dockerfile
-      tags: $(Build.SourceBranchName).$(Build.BuildId)
+      tags: $(tags)
   - task: Docker@2
     displayName: Push image
     inputs:
       containerRegistry: $(containerRegistry)
-      repository: epicli
+      repository: $(repository)
       command: push
-      tags: $(Build.SourceBranchName).$(Build.BuildId)
+      tags: $(tags)
