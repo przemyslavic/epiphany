@@ -3,10 +3,14 @@ trigger:
   branches:
     include:
     - develop
-
+pr:
+  branches:
+    include:
+    - develop
+    
 pool:
   name: $(poolName)
-  
+
 jobs:
 - job: Run_unit_tests
   displayName: Run unit tests
@@ -21,14 +25,14 @@ jobs:
       targetType: inline
       script: >
         python -m ensurepip --upgrade
-        python -m pip install pytest jinja2 boto3  jsonschema python-json-logger pytest_mock pyyaml wheel setuptools twine ruamel.yaml
+        
+        python -m pip install boto3 jinja2 jsonschema pytest python-json-logger pytest_mock pyyaml wheel setuptools twine ruamel.yaml
   - task: Bash@3
     displayName: Run unit tests
     continueOnError: true
     inputs:
       targetType: inline
       script: >-
-        cd $(System.DefaultWorkingDirectory)
         python -m pytest --junit-xml=tests/results/result.xml
   - task: PublishTestResults@2
     displayName: Publish Test Results
@@ -37,3 +41,23 @@ jobs:
       searchFolder: $(System.DefaultWorkingDirectory)/tests/results
       failTaskOnFailedTests: true
       testRunTitle: Python unit tests for Epicli
+- job: Build_epicli_image
+  displayName: Build an epicli image
+  dependsOn:
+  - Run_unit_tests
+  steps:
+  - task: Docker@2
+    displayName: Build image
+    inputs:
+      containerRegistry: $(containerRegistry)
+      repository: epicli
+      command: build
+      Dockerfile: Dockerfile
+      tags: $(Build.SourceBranchName).$(Build.BuildId)
+  - task: Docker@2
+    displayName: Push image
+    inputs:
+      containerRegistry: $(containerRegistry)
+      repository: epicli
+      command: push
+      tags: $(Build.SourceBranchName).$(Build.BuildId)
