@@ -34,7 +34,7 @@ stages:
             targetType: inline
             script: |
               echo $(resources.pipeline._source-pipeline.runId)
-              echo $(Release.Artifacts.$(Release.PrimaryArtifactSourceAlias).BuildId)
+              echo $(Release.PrimaryArtifactSourceAlias)
               echo $(Build.SourceBranchName)
               echo $(Build.BuildId)
               echo $(resources.pipeline._source-pipeline.sourceBranch)
