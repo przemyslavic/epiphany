@@ -3,7 +3,7 @@ trigger: none
 
 resources:
   pipelines:
-    - pipeline: _epiphany-platform.epiphany [build]
+    - pipeline: _source-pipeline
       source: yaml-pipelines\epiphany-platform.epiphany [build]
 
 stages:
@@ -24,4 +24,4 @@ stages:
           inputs:
             targetType: inline
             script: |
-              echo $(Build.BuildId)
+              echo $(resources.pipeline._source-pipeline.runId)
