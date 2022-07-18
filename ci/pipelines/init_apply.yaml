@@ -21,6 +21,14 @@ stages:
     - job: Deploy
       steps:
         - checkout: none
+        - task: DownloadPipelineArtifact@2
+          displayName: 'Download Pipeline Artifact'
+          inputs:
+            buildType: 'specific'
+            project: 'epiphany'
+            definition: 142
+            artifactName: 'artifact1'
+
         - task: Bash@3
           displayName: Print BuildId
           inputs:
@@ -29,7 +37,7 @@ stages:
               echo $(resources.pipeline._source-pipeline.runId)
               echo $(Build.SourceBranchName)
               echo $(Build.BuildId)
-              echo $(Release.Artifacts._source-pipeline.SourceBranchName)
+              echo $(Release.Artifacts.artifact1.SourceBranchName)
 
 
         - task: Bash@3
