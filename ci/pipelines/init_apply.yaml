@@ -16,7 +16,7 @@ variables:
 
 
 stages:
-- stage: Deploy on AWS
+- stage: DeployAWS
   jobs:
     - job: Deploy
       steps:
