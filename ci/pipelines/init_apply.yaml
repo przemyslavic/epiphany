@@ -39,6 +39,7 @@ stages:
               echo $(resources.pipeline._source-pipeline.sourceBranch)
               echo $(Build.SourceBranch)
               echo $(image_tag)
+              echo $(Release.Artifacts)
 
         - task: Bash@3
           displayName: Install aws cli
