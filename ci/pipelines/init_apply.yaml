@@ -1,0 +1,21 @@
+---
+trigger: none
+
+resources:
+  pipelines:
+    - pipeline: _epiphany-platform.epiphany [build]
+      source: yaml-pipelines\epiphany-platform.epiphany [build]
+
+stages:
+- stage: Deploy
+  jobs:
+    - job: Deploy
+      pool:
+        name: Az Docker Build
+      steps:
+        - task: Bash@3
+          displayName: Print BuildId
+          inputs:
+            targetType: inline
+            script: |
+              echo $(Build.BuildId)
