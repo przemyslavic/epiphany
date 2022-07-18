@@ -7,23 +7,40 @@ resources:
     - pipeline: _source-pipeline
       source: yaml-pipelines\epiphany-platform.epiphany [build]
 
+pool:
+  name: $(agentPoolName)
+
+variables:
+  tags: $(Build.SourceBranchName).$(Build.BuildId)
+  cluster_name: testawsinitfull
+
+
 stages:
-- stage: Deploy
+- stage: Deploy on AWS
   jobs:
     - job: Deploy
-      pool:
-        name: Az Docker Build
       steps:
         - checkout: none
-        # - task: DownloadPipelineArtifact@2
-        #   displayName: 'Download Pipeline Artifact'
-        #   inputs:
-        #     buildType: 'specific'
-        #     project: 'epiphany'
-        #     definition: 142
         - task: Bash@3
           displayName: Print BuildId
           inputs:
             targetType: inline
             script: |
               echo $(resources.pipeline._source-pipeline.runId)
+              echo $(Build.SourceBranchName)
+              echo $(Build.BuildId)
+              echo $(Release.Artifacts._source-pipeline.SourceBranchName)
+
+
+        - task: Bash@3
+          displayName: Install aws cli
+          inputs:
+            targetType: inline
+            script: |
+              apt-get update && apt-get install awscli
+        - task: Bash@3
+          displayName: Check if build directory already exists
+          inputs:
+            targetType: inline
+            script: |
+              if [ -f "/build/epi-cli/build/$(cluster_name)/manifest.yml" ]; then echo "##vso[task.setvariable variable=directoryExists;]true"; fi
