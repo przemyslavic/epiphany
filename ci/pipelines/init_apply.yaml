@@ -5,7 +5,7 @@ pr: none
 resources:
   pipelines:
     - pipeline: _source-pipeline
-      source: yaml-pipelines\epiphany-platform.epiphany [build]
+      source: przemyslavic\przemyslavic.epiphany draft
 
 pool:
   name: $(agentPoolName)
@@ -27,7 +27,7 @@ stages:
           inputs:
             buildType: 'specific'
             project: 'epiphany'
-            definition: 142
+            definition: 140
 
         - task: Bash@3
           displayName: Print BuildId

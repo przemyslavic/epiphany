@@ -60,19 +60,24 @@ jobs:
           script: |
             echo Image tags: $(containerRegistry)/$(repository):$(tags)
 
-      - task: Docker@2
-        displayName: Build the image
-        inputs:
-          containerRegistry: $(containerRegistry)
-          repository: $(repository)
-          command: build
-          Dockerfile: Dockerfile
-          tags: $(tags)
+      # - task: Docker@2
+      #   displayName: Build the image
+      #   inputs:
+      #     containerRegistry: $(containerRegistry)
+      #     repository: $(repository)
+      #     command: build
+      #     Dockerfile: Dockerfile
+      #     tags: $(tags)
 
-      - task: Docker@2
-        displayName: Push the image
+      # - task: Docker@2
+      #   displayName: Push the image
+      #   inputs:
+      #     containerRegistry: $(containerRegistry)
+      #     repository: $(repository)
+      #     command: push
+      #     tags: $(tags)
+
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish Pipeline Artifact'
         inputs:
-          containerRegistry: $(containerRegistry)
-          repository: $(repository)
-          command: push
-          tags: $(tags)
+          artifact: testartifact
