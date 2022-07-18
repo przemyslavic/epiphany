@@ -33,6 +33,7 @@ stages:
           inputs:
             targetType: inline
             script: |
+              printenv
               echo $(resources.pipeline._source-pipeline.runId)
               echo $(resources.pipeline._source-pipeline.sourceBranch)
               echo $(Build.SourceBranch)
