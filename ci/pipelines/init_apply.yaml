@@ -13,6 +13,12 @@ stages:
       pool:
         name: Az Docker Build
       steps:
+        - task: DownloadPipelineArtifact@2
+          displayName: 'Download Pipeline Artifact'
+          inputs:
+            buildType: 'specific'
+            project: 'epiphany'
+            definition: 142
         - task: Bash@3
           displayName: Print BuildId
           inputs:
