@@ -36,8 +36,8 @@ stages:
               echo $(resources.pipeline._source-pipeline.runId)
               echo $(Build.SourceBranchName)
               echo $(Build.BuildId)
-              echo $(Release.Artifacts._source-pipeline.sourceBranch)
-              echo $(Release.Artifacts._source-pipeline.sourceBranchName)
+              echo $(resources.pipeline._source-pipeline.sourceBranch)
+              echo $(resources.pipeline._source-pipeline.sourceBranchName)
 
         - task: Bash@3
           displayName: Install aws cli
