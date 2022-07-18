@@ -27,7 +27,6 @@ stages:
             buildType: 'specific'
             project: 'epiphany'
             definition: 142
-            artifactName: 'artifact1'
 
         - task: Bash@3
           displayName: Print BuildId
@@ -37,8 +36,8 @@ stages:
               echo $(resources.pipeline._source-pipeline.runId)
               echo $(Build.SourceBranchName)
               echo $(Build.BuildId)
-              echo $(Release.Artifacts.artifact1.SourceBranchName)
-
+              echo $(Release.Artifacts._source-pipeline.sourceBranch)
+              echo $(Release.Artifacts._source-pipeline.sourceBranchName)
 
         - task: Bash@3
           displayName: Install aws cli
