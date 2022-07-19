@@ -17,7 +17,7 @@ variables:
   repository: epicli
   deploy: false
   destroy: true
-  testvar: ${resources.pipeline._source-pipeline.sourceBranch##*/}.$(resources.pipeline._source-pipeline.runId)"
+  testvar: ${resources.pipeline._source-pipeline.sourceBranch##*/}.$(resources.pipeline._source-pipeline.runId)
   testvar2: ${$(resources.pipeline._source-pipeline.sourceBranch)##*/}.$(resources.pipeline._source-pipeline.runId)
 
 
