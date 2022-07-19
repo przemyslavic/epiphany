@@ -15,8 +15,8 @@ variables:
   _ping_retries: 20
   cluster_name: testawsinitfull
   repository: epicli
-  deploy: false
-  destroy: true
+  runDeployJob: $(runDeployJob)
+  runDestroyJob: $(runDestroyJob)
 
 stages:
 - stage: DeployAWS
@@ -37,7 +37,7 @@ stages:
           name: setVarStep
 
     - job: Deploy
-      condition: eq(variables['deploy'], 'true')
+      condition: eq(variables['runDeployJob'], 'true')
       dependsOn: SetVariables
       variables:
         image_tag: $[ dependencies.SetVariables.outputs['setvarStep.image_tag'] ]
@@ -136,7 +136,7 @@ stages:
           continueOnError: true
 
     - job: Destroy
-      condition: eq(variables['destroy'], 'true')
+      condition: eq(variables['runDestroyJob'], 'true')
       dependsOn: SetVariables
       variables:
         image_tag: $[ dependencies.SetVariables.outputs['setvarStep.image_tag'] ]
