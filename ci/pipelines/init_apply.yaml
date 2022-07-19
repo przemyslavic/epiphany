@@ -124,4 +124,4 @@ stages:
             containerCommand: -c "cd ~ && epicli -l ~/log.log --auto-approve delete -b /shared/build/$(cluster_name)"
             runInBackground: false
           condition: and(not(in(variables['Agent.JobStatus'], 'Failed', 'Canceled', 'SucceededWithIssues')), eq(variables['destroy_environment'], 'true'))
-          
+
