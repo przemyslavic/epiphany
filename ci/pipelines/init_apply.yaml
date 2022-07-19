@@ -53,7 +53,7 @@ stages:
             volumes: /tmp/build/epi-cli:/shared
             containerCommand: -c "cd ~ && epicli -l ~/log.log --auto-approve delete -b /shared/build/$(cluster_name)"
             runInBackground: false
-            condition: eq(variables['directoryExists'], true)
+          condition: eq(variables['directoryExists'], true)
         - task: Bash@3
           displayName: Clean up
           inputs:
