@@ -144,6 +144,13 @@ stages:
       steps:
         - checkout: none
 
+        - task: Bash@3
+          displayName: Check if build directory already exists
+          inputs:
+            targetType: inline
+            script: |
+              if [ -f "/build/epi-cli/build/$(cluster_name)/manifest.yml" ]; then echo "##vso[task.setvariable variable=directoryExists;]true"; fi
+
         - task: Docker@1
           displayName: Destroy environment
           inputs:
@@ -154,3 +161,4 @@ stages:
             volumes: /tmp/build/epi-cli:/shared
             containerCommand: -c "cd ~ && epicli -l ~/log.log --auto-approve delete -b /shared/build/$(cluster_name)"
             runInBackground: false
+          condition: eq(variables['directoryExists'], true)
