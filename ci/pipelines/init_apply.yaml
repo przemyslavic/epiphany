@@ -5,7 +5,7 @@ pr: none
 resources:
   pipelines:
     - pipeline: _source-pipeline
-      source: przemyslavic\przemyslavic.epiphany draft
+      source: yaml-pipelines\epiphany-platform.epiphany [build]
 
 pool:
   name: $(agentPoolName)
@@ -27,7 +27,7 @@ stages:
           inputs:
             buildType: 'specific'
             project: 'epiphany'
-            definition: 140
+            definition: 142
 
         - task: Bash@3
           displayName: Print BuildId
@@ -39,8 +39,7 @@ stages:
               echo $(resources.pipeline._source-pipeline.sourceBranch)
               echo $(Build.SourceBranch)
               echo $(image_tag)
-              echo $(Release.PrimaryArtifactSourceAlias)
-              echo $(Release.DefinitionId)
+
         - task: Bash@3
           displayName: Install aws cli
           inputs:
