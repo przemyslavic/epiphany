@@ -44,7 +44,8 @@ stages:
         - task: Docker@1
           displayName: Destroy environment
           inputs:
-            azureContainerRegistry: $(containerRegistry)
+            azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+            azureContainerRegistry: $(azureContainerRegistry)
             command: run
             imageName: $(repository):$(image_tag)
             volumes: /tmp/build/epi-cli:/shared
