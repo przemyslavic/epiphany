@@ -15,8 +15,6 @@ variables:
   _ping_retries: 20
   cluster_name: testawsinitfull
   repository: epicli
-  runDeployJob: $(runDeployJob)
-  runDestroyJob: $(runDestroyJob)
 
 stages:
 - stage: DeployAWS
