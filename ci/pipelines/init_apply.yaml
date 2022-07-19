@@ -135,7 +135,7 @@ stages:
           continueOnError: true
 
     - job: Destroy
-      condition: eq(variables['runDestroyJob'], 'true')
+      condition: and(eq(variables['runDestroyJob'], 'true'), succeeded())
       dependsOn:
         - SetVariables
         - Deploy
