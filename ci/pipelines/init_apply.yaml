@@ -41,8 +41,8 @@ stages:
               echo $sourceBranchName
               image_tag="${sourceBranchName}.$(resources.pipeline._source-pipeline.runId)"
               echo $image_tag
-              echo "##vso[task.setvariable variable=image_tag;]$image_tag"
-              echo $(image_tag)
+              echo "##vso[task.setvariable variable=imagetag;]$image_tag"
+              echo $(imagetag)
               printenv
         - task: Bash@3
           displayName: Install aws cli
