@@ -17,15 +17,11 @@ variables:
   repository: epicli
   deploy: false
   destroy: true
-  testvar: ${resources.pipeline._source-pipeline.sourceBranch##*/}.$(resources.pipeline._source-pipeline.runId)
-  testvar2: ${$(resources.pipeline._source-pipeline.sourceBranch)##*/}.$(resources.pipeline._source-pipeline.runId)
-
 
 stages:
 - stage: DeployAWS
   jobs:
-    - job: Deploy
-      condition: eq(variables['deploy'], 'true')
+    - job: SetVariables
       steps:
         - checkout: none
 
@@ -37,7 +33,16 @@ stages:
               set -e
               sourceBranch=$(resources.pipeline._source-pipeline.sourceBranch)
               sourceBranchName=${sourceBranch##*/}
-              echo "##vso[task.setvariable variable=image_tag;]${sourceBranchName}.$(resources.pipeline._source-pipeline.runId)"
+              echo "##vso[task.setvariable variable=image_tag;isOutput=true;]${sourceBranchName}.$(resources.pipeline._source-pipeline.runId)"
+          name: setVarStep
+
+    - job: Deploy
+      condition: eq(variables['deploy'], 'true')
+      dependsOn: SetVariables
+      variables:
+        image_tag: $[ dependencies.SetVariables.outputs['setvarStep.image_tag'] ]
+      steps:
+        - checkout: none
 
         - task: Bash@3
           displayName: Install aws cli
@@ -132,24 +137,19 @@ stages:
 
     - job: Destroy
       condition: eq(variables['destroy'], 'true')
+      dependsOn: SetVariables
+      variables:
+        image_tag: $[ dependencies.SetVariables.outputs['setvarStep.image_tag'] ]
       steps:
         - checkout: none
 
-        - task: Bash@3
-          displayName: Install aws cli
+        - task: Docker@1
+          displayName: Destroy environment
           inputs:
-            targetType: inline
-            script: |
-              echo $(testvar)
-              echo $(testvar2)
-
-        # - task: Docker@1
-        #   displayName: Destroy environment
-        #   inputs:
-        #     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-        #     azureContainerRegistry: $(azureContainerRegistry)
-        #     command: Run an image
-        #     imageName: $(repository):$(image_tag)
-        #     volumes: /tmp/build/epi-cli:/shared
-        #     containerCommand: -c "cd ~ && epicli -l ~/log.log --auto-approve delete -b /shared/build/$(cluster_name)"
-        #     runInBackground: false
+            azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+            azureContainerRegistry: $(azureContainerRegistry)
+            command: Run an image
+            imageName: $(repository):$(image_tag)
+            volumes: /tmp/build/epi-cli:/shared
+            containerCommand: -c "cd ~ && epicli -l ~/log.log --auto-approve delete -b /shared/build/$(cluster_name)"
+            runInBackground: false
