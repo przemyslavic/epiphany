@@ -17,6 +17,9 @@ variables:
   repository: epicli
   deploy: false
   destroy: true
+  testvar: ${resources.pipeline._source-pipeline.sourceBranch##*/}.$(resources.pipeline._source-pipeline.runId)"
+  testvar2: ${$(resources.pipeline._source-pipeline.sourceBranch)##*/}.$(resources.pipeline._source-pipeline.runId)
+
 
 stages:
 - stage: DeployAWS
@@ -132,13 +135,21 @@ stages:
       steps:
         - checkout: none
 
-        - task: Docker@1
-          displayName: Destroy environment
+        - task: Bash@3
+          displayName: Install aws cli
           inputs:
-            azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-            azureContainerRegistry: $(azureContainerRegistry)
-            command: Run an image
-            imageName: $(repository):$(image_tag)
-            volumes: /tmp/build/epi-cli:/shared
-            containerCommand: -c "cd ~ && epicli -l ~/log.log --auto-approve delete -b /shared/build/$(cluster_name)"
-            runInBackground: false
+            targetType: inline
+            script: |
+              echo $(testvar)
+              echo $(testvar2)
+
+        # - task: Docker@1
+        #   displayName: Destroy environment
+        #   inputs:
+        #     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+        #     azureContainerRegistry: $(azureContainerRegistry)
+        #     command: Run an image
+        #     imageName: $(repository):$(image_tag)
+        #     volumes: /tmp/build/epi-cli:/shared
+        #     containerCommand: -c "cd ~ && epicli -l ~/log.log --auto-approve delete -b /shared/build/$(cluster_name)"
+        #     runInBackground: false
