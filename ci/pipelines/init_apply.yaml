@@ -76,12 +76,12 @@ stages:
             targetType: inline
             script: |
               set -e
-              sed -i '0,/---/s~prefix:.*~prefix: ci~; \
-              0,/---/s~key_path:.*~key_path: $(key_path)~; \
-              0,/---/s~use_public_ips:.*~use_public_ips: true~; \
-              0,/---/s~access_key_id:.*~access_key_id: $(aws_key)~; \
-              0,/---/s~secret_access_key:.*~secret_access_key: $(aws_secret)~' \
-              /build/epi-cli/build/$(cluster_name)/$(cluster_name).yml
+              sed -i -e '0,/---/s~prefix:.*~prefix: ci~' \
+                     -e '0,/---/s~key_path:.*~key_path: $(key_path)~' \
+                     -e '0,/---/s~use_public_ips:.*~use_public_ips: true~' \
+                     -e '0,/---/s~access_key_id:.*~access_key_id: $(aws_key)~' \
+                     -e '0,/---/s~secret_access_key:.*~secret_access_key: $(aws_secret)~' \
+                     /build/epi-cli/build/$(cluster_name)/$(cluster_name).yml
               chown -R 1000:1000 /build/epi-cli/build/$(cluster_name)
         - task: Docker@1
           displayName: Epicli apply
