@@ -37,8 +37,8 @@ stages:
               echo $(resources.pipeline._source-pipeline.runId)
               echo $(resources.pipeline._source-pipeline.sourceBranch)
               echo $(Build.SourceBranch)
-              echo $(image_tag)
-              sourceBranchName=${resources.pipeline._source-pipeline.sourceBranch##*/}
+              sourceBranch=$(resources.pipeline._source-pipeline.sourceBranch)
+              sourceBranchName=${sourceBranch##*/}
               echo $sourceBranchName
               echo "##vso[task.setvariable variable=image_tag;]$(Build.SourceBranch).$(resources.pipeline._source-pipeline.runId)
         - task: Bash@3
