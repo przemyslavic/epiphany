@@ -36,7 +36,8 @@ stages:
 
     - job: Deploy
       condition: eq(variables['runDeployJob'], 'true')
-      dependsOn: SetVariables
+      dependsOn:
+        - SetVariables
       variables:
         image_tag: $[ dependencies.SetVariables.outputs['setvarStep.image_tag'] ]
       steps:
@@ -135,7 +136,9 @@ stages:
 
     - job: Destroy
       condition: eq(variables['runDestroyJob'], 'true')
-      dependsOn: SetVariables
+      dependsOn:
+        - SetVariables
+        - Deploy
       variables:
         image_tag: $[ dependencies.SetVariables.outputs['setvarStep.image_tag'] ]
       steps:
