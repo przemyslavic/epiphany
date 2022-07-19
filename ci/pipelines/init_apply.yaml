@@ -15,11 +15,14 @@ variables:
   _ping_retries: 20
   cluster_name: testawsinitfull
   repository: epicli
+  deploy: false
+  destroy: true
 
 stages:
 - stage: DeployAWS
   jobs:
     - job: Deploy
+      condition: eq(variables['deploy'], 'true')
       steps:
         - checkout: none
 
@@ -52,7 +55,7 @@ stages:
           inputs:
             azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
             azureContainerRegistry: $(azureContainerRegistry)
-            command: run
+            command: Run an image
             imageName: $(repository):$(image_tag)
             volumes: /tmp/build/epi-cli:/shared
             containerCommand: -c "cd ~ && epicli -l ~/log.log --auto-approve delete -b /shared/build/$(cluster_name)"
@@ -71,7 +74,7 @@ stages:
           inputs:
             azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
             azureContainerRegistry: $(azureContainerRegistry)
-            command: run
+            command: Run an image
             imageName: $(repository):$(image_tag)
             volumes: /tmp/build/epi-cli:/shared
             containerCommand: -c "epicli init -p aws -n $(cluster_name) --full"
@@ -96,7 +99,7 @@ stages:
           inputs:
             azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
             azureContainerRegistry: $(azureContainerRegistry)
-            command: run
+            command: Run an image
             imageName: $(repository):$(image_tag)
             volumes: /tmp/build/epi-cli:/shared
             containerCommand: -c "cd ~ && epicli -l ~/log.log apply --vault-password $(vault_password) -f /shared/build/$(cluster_name)/$(cluster_name).yml --ping-retries $(_ping_retries) --ansible-forks $(_ansible_forks)"
@@ -107,7 +110,7 @@ stages:
           inputs:
             azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
             azureContainerRegistry: $(azureContainerRegistry)
-            command: run
+            command: Run an image
             imageName: $(repository):$(image_tag)
             volumes: /tmp/build/epi-cli:/shared
             containerCommand: -c "cd ~ && epicli --auto-approve -l ~/log.log test -b /shared/build/$(cluster_name) -k /etc/kubernetes/admin.conf"
@@ -124,14 +127,18 @@ stages:
             buildPlatform: '$(cluster_name)'
           continueOnError: true
 
+    - job: Destroy
+      condition: eq(variables['destroy'], 'true')
+      steps:
+        - checkout: none
+
         - task: Docker@1
           displayName: Destroy environment
           inputs:
             azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
             azureContainerRegistry: $(azureContainerRegistry)
-            command: run
+            command: Run an image
             imageName: $(repository):$(image_tag)
             volumes: /tmp/build/epi-cli:/shared
             containerCommand: -c "cd ~ && epicli -l ~/log.log --auto-approve delete -b /shared/build/$(cluster_name)"
             runInBackground: false
-          condition: and(not(in(variables['Agent.JobStatus'], 'Failed', 'Canceled', 'SucceededWithIssues')), eq(variables['destroy_environment'], 'true'))
