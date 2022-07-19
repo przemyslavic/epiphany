@@ -33,14 +33,14 @@ stages:
           inputs:
             targetType: inline
             script: |
-              printenv
+              set -e
               echo $(resources.pipeline._source-pipeline.runId)
               echo $(resources.pipeline._source-pipeline.sourceBranch)
               echo $(Build.SourceBranch)
               sourceBranch=$(resources.pipeline._source-pipeline.sourceBranch)
               sourceBranchName=${sourceBranch##*/}
-              echo $sourceBranchName
-              echo "##vso[task.setvariable variable=image_tag;]$(Build.SourceBranch).$(resources.pipeline._source-pipeline.runId)
+              echo "##vso[task.setvariable variable=image_tag;]$sourceBranchName.$(resources.pipeline._source-pipeline.runId)"
+              printenv
         - task: Bash@3
           displayName: Install aws cli
           inputs:
