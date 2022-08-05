@@ -60,13 +60,6 @@ net-tools
 nfs-common
 # for nfs-common
 libtirpc3
-opendistro-alerting 1.13.1
-opendistro-index-management 1.13.1
-opendistro-job-scheduler 1.13.0
-opendistro-performance-analyzer 1.13.0
-opendistro-security 1.13.1
-opendistro-sql 1.13.0
-opendistroforelasticsearch-kibana 1.13.1
 openjdk-8-jre-headless
 openssl
 postgresql-13
@@ -182,6 +175,15 @@ kubelet 1.22.4
 kubernetes-cni 0.8.6-00
 # kubernetes-cni-0.8.7 since K8s v1.19.15
 kubernetes-cni 0.8.7-00
+
+[packagesfromurl]
+https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-alerting_1.13.1.0-1_all.deb
+https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-index-management_1.13.1.0-1_all.deb
+https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-job-scheduler_1.13.0.0-1_all.deb
+https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-performance-analyzer_1.13.0.0-1_all.deb
+https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-security_1.13.1.0-1_all.deb
+https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-sql_1.13.0.0-1_all.deb
+https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistroforelasticsearch-kibana_1.13.1_amd64.deb
 
 [files]
 # --- Packages ---
