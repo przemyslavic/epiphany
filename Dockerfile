@@ -34,6 +34,7 @@ RUN : INSTALL APT REQUIREMENTS \
     && chmod +x /usr/local/bin/istioctl \
 \
     && : INSTALL GEM REQUIREMENTS \
+    && gem install net-ssh -v 6.1.0 \
     && gem install \
         bcrypt_pbkdf ed25519 rake rspec_junit_formatter serverspec \
 \
