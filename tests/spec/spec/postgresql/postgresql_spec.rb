@@ -38,6 +38,7 @@ replicated =           countInventoryHosts("postgresql") > 1
 replication_user =     config_docs[:postgresql]["specification"]["extensions"]["replication"]["replication_user_name"]
 replication_password = config_docs[:postgresql]["specification"]["extensions"]["replication"]["replication_user_password"]
 max_wal_senders =      config_docs[:postgresql]["specification"]["config_file"]["parameter_groups"].detect {|i| i["name"] == 'REPLICATION'}["subgroups"].detect {|i| i["name"] == "Sending Server(s)"}["parameters"].detect {|i| i["name"] == "max_wal_senders"}["value"]
+max_replication_slots = config_docs[:postgresql]["specification"]["config_file"]["parameter_groups"].detect {|i| i["name"] == 'REPLICATION'}["subgroups"].detect {|i| i["name"] == "Sending Server(s)"}["parameters"].detect {|i| i["name"] == "max_replication_slots"}["value"]
 pgaudit_enabled =      config_docs[:postgresql]["specification"]["extensions"]["pgaudit"]["enabled"]
 
 if upgradeRun?
@@ -341,6 +342,10 @@ if replicated
           its(:stdout) { should match /^max_wal_senders = #{max_wal_senders}/ }
           its(:exit_status) { should eq 0 }
         end
+        describe command("cat /var/lib/pgsql/13/data/postgresql-epiphany.conf | grep max_replication_slots") do
+          its(:stdout) { should match /^max_replication_slots = #{max_replication_slots}/ }
+          its(:exit_status) { should eq 0 }
+        end        
         describe command("cat /var/lib/pgsql/13/data/postgresql-epiphany.conf | grep wal_keep_size") do
           its(:stdout) { should match /^wal_keep_size = #{wal_keep_size}/ }
           its(:exit_status) { should eq 0 }
