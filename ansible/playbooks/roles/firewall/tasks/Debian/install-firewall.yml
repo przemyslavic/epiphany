@@ -22,6 +22,9 @@
         name: firewalld
         state: present
       register: install_firewalld
+      retries: 10
+      delay: 30
+      until: install_firewalld is succeeded
 
     - name: Stop and mask service for consistency with RHEL
       block:
