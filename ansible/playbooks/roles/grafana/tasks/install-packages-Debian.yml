@@ -3,3 +3,7 @@
   apt:
     deb: "{{ _package_url }}"
     state: present
+  register: result
+  retries: 10
+  delay: 30
+  until: result is succeeded

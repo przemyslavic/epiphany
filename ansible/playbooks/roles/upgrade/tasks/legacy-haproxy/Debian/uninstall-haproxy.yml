@@ -4,3 +4,7 @@
     name: haproxy
     update_cache: true
     state: absent
+  register: result
+  retries: 10
+  delay: 30
+  until: result is succeeded

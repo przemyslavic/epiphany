@@ -36,6 +36,10 @@
       vars:
         packages_to_install_with_version: >-
           {{ packages_to_install.items() | map('join', '=') | list }}
+      register: result
+      retries: 10
+      delay: 30
+      until: result is succeeded
 
     - name: k8s/install | Include hold packages task
       include_tasks: hold-packages.yml

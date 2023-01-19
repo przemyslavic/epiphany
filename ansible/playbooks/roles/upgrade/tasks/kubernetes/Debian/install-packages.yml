@@ -53,6 +53,10 @@
         name: "{{ packages_to_downgrade }}"
         state: absent
       when: packages_to_downgrade | length
+      register: result
+      retries: 10
+      delay: 30
+      until: result is succeeded
 
     - name: "k8s/install | Install packages: {{ packages_to_install_with_version | join( ', ' ) }}"
       apt:
