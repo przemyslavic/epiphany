@@ -54,7 +54,7 @@
         state: absent
       when: packages_to_downgrade | length
       register: result
-      retries: 10
+      retries: 60
       delay: 30
       until: result is succeeded
 

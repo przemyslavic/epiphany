@@ -22,7 +22,7 @@
         name: firewalld
         state: present
       register: install_firewalld
-      retries: 10
+      retries: 60
       delay: 30
       until: install_firewalld is succeeded
 
