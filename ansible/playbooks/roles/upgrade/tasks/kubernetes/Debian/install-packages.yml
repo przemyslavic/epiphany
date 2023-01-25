@@ -63,6 +63,8 @@
         name: "{{ packages_to_install_with_version }}"
         update_cache: true
         state: present
+      retries: 60
+      delay: 30
       vars:
         packages_to_install_with_version: >-
           {{ target_packages.items() | map('join', '=') | list }}

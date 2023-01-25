@@ -14,6 +14,8 @@
     name: ufw
     state: absent
     purge: yes
+  retries: 60
+  delay: 30
 
 - name: Install firewalld package
   block:
