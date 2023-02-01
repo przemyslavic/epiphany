@@ -169,7 +169,7 @@ spec:
                   - test
                 matchLabels:
                   app: {{ auth_service_name }}
-              topologyKey: topology.kubernetes.io/zone
+              topologyKey: kubernetes.io/hostname
             weight: 100
       initContainers:
       - name: "{{ auth_service_name }}-init"
