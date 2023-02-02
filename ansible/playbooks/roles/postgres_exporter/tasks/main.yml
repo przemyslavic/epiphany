@@ -9,7 +9,7 @@
     install_recommends: no
   when: ansible_os_family == 'Debian'
   register: result
-  retries: 10
+  retries: 60
   delay: 30
   until: result is succeeded
 

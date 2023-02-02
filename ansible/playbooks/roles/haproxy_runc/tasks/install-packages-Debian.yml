@@ -6,6 +6,6 @@
       - containerd.io  # provides "runc"
     state: present
   register: result
-  retries: 10
+  retries: 60
   delay: 30
   until: result is succeeded

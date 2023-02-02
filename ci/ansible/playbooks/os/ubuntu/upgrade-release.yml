@@ -9,6 +9,8 @@
 
     apt:
       tmp_config_file: 99-disable-auto-upgrades-tmp
+    retries: 60
+    delay: 30
     reboot:
       connect_timeout: 5  # maximum seconds to wait for a successful connection to the managed hosts before trying again
       timeout: 300  # default 600
