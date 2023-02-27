@@ -70,6 +70,9 @@ fi
 
 check_connection apt $apt_sources_list
 
+# Ensure ca-certificates package is in the latest version
+run_cmd_with_retries 3 apt-get install -y ca-certificates
+
 # install prerequisites which might be missing
 prerequisites=(wget gpg curl tar)
 for i in ${prerequisites[@]}; do
