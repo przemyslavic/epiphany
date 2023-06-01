@@ -7,7 +7,7 @@ Ubuntu 18.04 LTS will reach the end of the standard support on 31 May 2023.
 
 ### Updated
 
-- [#10name](#10) - Switch from `k8s.gcr.io` to `registry.k8s.io`
+- #10 - Switch from `k8s.gcr.io` to `registry.k8s.io`
 
 ## [1.0.10] 2023-03-21
 
