@@ -785,7 +785,7 @@ specification:
 ---
 **NOTE**
 
-Not all components are supported for this action. There is a bunch of issues referenced below in this document, [one](https://github.com/epiphany-platform/epiphany/issues/1574) of them is that disks are not removed for all components after downscale.
+Not all components are supported for this action. There is a bunch of issues referenced below in this document, [one](../../../../../issues/1574) of them is that disks are not removed for all components after downscale.
 
 ---
 
