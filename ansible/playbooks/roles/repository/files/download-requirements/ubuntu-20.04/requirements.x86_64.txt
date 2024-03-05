@@ -10,7 +10,6 @@ ca-certificates
 cifs-utils
 conntrack
 containerd.io
-cri-tools 1.13.0
 curl
 docker-ce 5:20.10.8
 docker-ce-cli 5:20.10.8
