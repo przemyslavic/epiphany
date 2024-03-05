@@ -8,7 +8,7 @@ auditd
 bash-completion
 ca-certificates
 cifs-utils
-conntrack# for kubelet
+conntrack
 containerd.io
 cri-tools 1.13.0
 curl
@@ -48,7 +48,7 @@ fping
 gnupg2
 htop
 iftop
-iproute2# for kubelet
+iproute2
 jq
 
 # for dpkg-scanpackages
