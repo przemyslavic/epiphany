@@ -58,6 +58,7 @@
     - name: Set images to load
       set_fact:
         generic_and_current_images: "{{ specification.images_to_load[ansible_architecture].generic + specification.images_to_load[ansible_architecture].current }}"
+        legacy_images: "{{ specification.images_to_load[ansible_architecture].legacy }}"
 
     - name: Load generic and current version images
       vars:
@@ -71,3 +72,19 @@
         new_image_tag: "{{ image_registry_address }}/{{ item.name }}"
       include_tasks: push-image.yml
       loop: "{{ generic_and_current_images }}"
+
+    - name: Load legacy version images to registry when upgrading
+      when: is_upgrade_run
+      block:
+        - name: Load legacy version images
+          vars:
+            docker_image: "{{ item }}"
+          include_tasks: load-image.yml
+          loop: "{{ legacy_images }}"
+
+        - name: Push legacy version images to registry
+          vars:
+            docker_image: "{{ item }}"
+            new_image_tag: "{{ image_registry_address }}/{{ item.name }}"
+          include_tasks: push-image.yml
+          loop: "{{ legacy_images }}"

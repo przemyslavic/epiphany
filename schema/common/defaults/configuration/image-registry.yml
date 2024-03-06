@@ -67,6 +67,7 @@ specification:
           file_name: node-v3.20.3.tar
         - name: "calico/pod2daemon-flexvol:v3.20.3"
           file_name: pod2daemon-flexvol-v3.20.3.tar
+      legacy: []
     aarch64:
       generic:
         - name: "epiphanyplatform/keycloak:14.0.0"
@@ -115,3 +116,4 @@ specification:
           file_name: node-v3.20.3.tar
         - name: "calico/pod2daemon-flexvol:v3.20.3"
           file_name: pod2daemon-flexvol-v3.20.3.tar
+      legacy: []

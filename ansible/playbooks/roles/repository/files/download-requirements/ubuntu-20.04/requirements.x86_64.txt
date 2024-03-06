@@ -147,13 +147,18 @@ python3-cryptography
 python3-cffi-backend
 
 [packagesfromurl]
-https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-alerting_1.13.1.0-1_all.deb
-https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-index-management_1.13.1.0-1_all.deb
-https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-job-scheduler_1.13.0.0-1_all.deb
-https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-performance-analyzer_1.13.0.0-1_all.deb
-https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-security_1.13.1.0-1_all.deb
-https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-sql_1.13.0.0-1_all.deb
-https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistroforelasticsearch-kibana_1.13.1_amd64.deb
+https://github.com/hitachienergy/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-alerting_1.13.1.0-1_all.deb
+https://github.com/hitachienergy/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-index-management_1.13.1.0-1_all.deb
+https://github.com/hitachienergy/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-job-scheduler_1.13.0.0-1_all.deb
+https://github.com/hitachienergy/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-performance-analyzer_1.13.0.0-1_all.deb
+https://github.com/hitachienergy/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-security_1.13.1.0-1_all.deb
+https://github.com/hitachienergy/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistro-sql_1.13.0.0-1_all.deb
+https://github.com/hitachienergy/alternative-repo/raw/main/1.0.x/ubuntu/packages/opendistroforelasticsearch-kibana_1.13.1_amd64.deb
+https://github.com/hitachienergy/alternative-repo/raw/main/2.0.x/x86_64/debian/packages/cri-tools_1.25.0-00_amd64.deb
+https://github.com/hitachienergy/alternative-repo/raw/main/2.0.x/x86_64/debian/packages/kubeadm_1.22.4-00_amd64.deb
+https://github.com/hitachienergy/alternative-repo/raw/main/2.0.x/x86_64/debian/packages/kubectl_1.22.4-00_amd64.deb
+https://github.com/hitachienergy/alternative-repo/raw/main/2.0.x/x86_64/debian/packages/kubelet_1.22.4-00_amd64.deb
+https://github.com/hitachienergy/alternative-repo/raw/main/2.0.x/x86_64/debian/packages/kubernetes-cni_0.8.7-00_amd64.deb
 
 [files]
 # --- Packages ---
@@ -161,12 +166,6 @@ https://github.com/epiphany-platform/alternative-repo/raw/main/1.0.x/ubuntu/pack
 https://packages.elastic.co/curator/5/debian9/pool/main/e/elasticsearch-curator/elasticsearch-curator_5.8.3_amd64.deb
 # Grafana package is not downloaded from repository since it was not reliable (issue #2449)
 https://dl.grafana.com/oss/release/grafana_8.3.2_amd64.deb
-# Switched to an alternate repository as K8s legacy repositories have been shut down
-https://github.com/hitachienergy/alternative-repo/raw/main/2.0.x/x86_64/debian/packages/cri-tools_1.25.0-00_amd64.deb
-https://github.com/hitachienergy/alternative-repo/raw/main/2.0.x/x86_64/debian/packages/kubeadm_1.22.4-00_amd64.deb
-https://github.com/hitachienergy/alternative-repo/raw/main/2.0.x/x86_64/debian/packages/kubectl_1.22.4-00_amd64.deb
-https://github.com/hitachienergy/alternative-repo/raw/main/2.0.x/x86_64/debian/packages/kubelet_1.22.4-00_amd64.deb
-https://github.com/hitachienergy/alternative-repo/raw/main/2.0.x/x86_64/debian/packages/kubernetes-cni_0.8.7-00_amd64.deb
 
 # --- Exporters ---
 https://github.com/danielqsj/kafka_exporter/releases/download/v1.4.0/kafka_exporter-1.4.0.linux-amd64.tar.gz
@@ -240,4 +239,11 @@ k8s.gcr.io/kube-proxy:v1.22.4
 k8s.gcr.io/coredns/coredns:v1.8.4
 k8s.gcr.io/etcd:3.5.0-0
 k8s.gcr.io/pause:3.5
+# flannel
 quay.io/coreos/flannel:v0.14.0
+quay.io/coreos/flannel:v0.14.0-amd64
+# canal & calico
+calico/cni:v3.20.3
+calico/kube-controllers:v3.20.3
+calico/node:v3.20.3
+calico/pod2daemon-flexvol:v3.20.3
