@@ -13,8 +13,8 @@ jsonschema = "*"
 python-json-logger = "*"
 "ruamel.yaml" = "*"
 click = "*"
-ansible = "6.7.0"
 azure-cli = "2.63.0"
+ansible = "10.3.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

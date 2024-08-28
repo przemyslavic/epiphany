@@ -20,4 +20,5 @@
     },
     "solargraph.diagnostics": false,
     "solargraph.formatting": true,
+    "ansible.python.interpreterPath": "/usr/local/bin/python",
 }

@@ -56,6 +56,7 @@ Note that versions are default versions and can be changed in certain cases thro
 | --------- | ------- | ------------ | ------- |
 | adal | 1.2.7 | https://github.com/AzureAD/azure-activedirectory-library-for-python | [Other](https://api.github.com/repos/azuread/azure-activedirectory-library-for-python/license) |
 | ansible-core | 2.17.3 | https://ansible.com/ | GPLv3+ |
+| ansible | 10.3.0 | https://ansible.com/ | GPL-3.0-or-later |
 | antlr4-python3-runtime | 4.13.1 | http://www.antlr.org | BSD |
 | applicationinsights | 0.11.10 | https://github.com/Microsoft/ApplicationInsights-Python | [MIT License](https://api.github.com/repos/microsoft/applicationinsights-python/license) |
 | argcomplete | 3.3.0 | https://github.com/kislyuk/argcomplete | [Apache License 2.0](https://api.github.com/repos/kislyuk/argcomplete/license) |
@@ -197,7 +198,7 @@ Note that versions are default versions and can be changed in certain cases thro
 | requests-oauthlib | 2.0.0 | https://github.com/requests/requests-oauthlib | [ISC License](https://api.github.com/repos/requests/requests-oauthlib/license) |
 | requests | 2.32.3 | https://requests.readthedocs.io | Apache-2.0 |
 | requests | 2.32.3 | https://requests.readthedocs.io | Apache-2.0 |
-| resolvelib | 0.8.1 | https://github.com/sarugaku/resolvelib | [ISC License](https://api.github.com/repos/sarugaku/resolvelib/license) |
+| resolvelib | 1.0.1 | https://github.com/sarugaku/resolvelib | [ISC License](https://api.github.com/repos/sarugaku/resolvelib/license) |
 | rpds-py | 0.20.0 | https://github.com/crate-py/rpds | MIT |
 | ruamel.yaml.clib | 0.2.8 | https://sourceforge.net/p/ruamel-yaml-clib/code/ci/default/tree | MIT |
 | ruamel.yaml | 0.17.40 | https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree | MIT license |

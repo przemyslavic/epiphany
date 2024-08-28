@@ -21,6 +21,14 @@ LICENSES = [
         "License": "GPLv3+"
     },
     {
+        "Name": "ansible",
+        "Version": "10.3.0",
+        "Summary": "Radically simple IT automation",
+        "Home-page": "https://ansible.com/",
+        "Author": "Ansible, Inc.",
+        "License": "GPL-3.0-or-later"
+    },
+    {
         "Name": "antlr4-python3-runtime",
         "Version": "4.13.2",
         "Summary": "ANTLR 4.13.2 runtime for Python 3",
@@ -1465,7 +1473,7 @@ LICENSES = [
     },
     {
         "Name": "resolvelib",
-        "Version": "0.8.1",
+        "Version": "1.0.1",
         "Summary": "Resolve abstract dependencies into concrete ones",
         "Home-page": "https://github.com/sarugaku/resolvelib",
         "Author": "Tzu-ping Chung",
