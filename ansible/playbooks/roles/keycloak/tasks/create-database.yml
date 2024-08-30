@@ -15,8 +15,11 @@
     postgres_primary: "{{ item.item }}"
   loop: "{{ in_recovery_state.results }}"
   loop_control:
-    label: {in_recovery: "{{ item.in_recovery }}"}
+    label: "in_recovery: {{ item.in_recovery }}"
   when: not item.in_recovery
+
+- debug:
+    var: in_recovery_state
 
 - name: Create DB objects
   delegate_to: "{{ _primary_node }}"
