@@ -88,6 +88,24 @@ def merge_list(to_merge, extend_by, key):
         to_merge[key] = extend_by
 
 
+def _are_compatible_types(val1, val2):
+    """Check if two values are of compatible types that can be merged."""
+    # Check if both are integers (handles int and ruamel.yaml ScalarInt)
+    if isinstance(val1, int) and isinstance(val2, int):
+        return True
+    # Check if both are floats
+    if isinstance(val1, float) and isinstance(val2, float):
+        return True
+    # Check if both are strings
+    if isinstance(val1, str) and isinstance(val2, str):
+        return True
+    # Check if both are booleans
+    if isinstance(val1, bool) and isinstance(val2, bool):
+        return True
+    # Fall back to exact type match for other types
+    return type(val1) == type(val2)
+
+
 def merge_objdict(to_merge, extend_by):
     for key, val in extend_by.items():
         if key in to_merge:
@@ -97,7 +115,7 @@ def merge_objdict(to_merge, extend_by):
             elif isinstance(to_merge[key], list) and isinstance(val, list):
                 # Dealing with 2 lists
                 merge_list(to_merge, val, key)
-            elif type(to_merge[key]) == type(val):
+            elif _are_compatible_types(to_merge[key], val):
                 # Dealing with 2 basic types (integer, boolean, string, etc.) so replace
                 to_merge[key] = val
             else:
