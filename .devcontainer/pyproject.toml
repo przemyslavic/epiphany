@@ -14,7 +14,7 @@ python-json-logger = "*"
 "ruamel.yaml" = "*"
 click = "*"
 ansible = "~9"
-azure-cli = "2.63.0"
+azure-cli = "2.79.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
