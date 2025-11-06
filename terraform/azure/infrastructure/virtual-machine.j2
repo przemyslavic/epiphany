@@ -10,14 +10,23 @@
 # {{ specification.name }}
 #####################################################
 
-resource "azurerm_virtual_machine" "{{ specification.name }}" {
+resource "azurerm_linux_virtual_machine" "{{ specification.name }}" {
   name                  = "{{ specification.name }}"
   location              = azurerm_resource_group.rg.location
   resource_group_name   = azurerm_resource_group.rg.name
-  vm_size               = "{{ specification.size }}"
-  network_interface_ids = ["${azurerm_network_interface.{{ specification.network_interface_name }}.id}"]
+  size                  = "{{ specification.size }}"
+  network_interface_ids = [azurerm_network_interface.{{ specification.network_interface_name }}.id]
+  
+  computer_name  = "{{ specification.hostname }}"
+  admin_username = "{{ specification.admin_username }}"
+  disable_password_authentication = true
 
-  storage_image_reference {
+  admin_ssh_key {
+    username   = "{{ specification.admin_username }}"
+    public_key = file("{{ specification.public_key }}")
+  }
+
+  source_image_reference {
     publisher = "{{ specification.storage_image_reference.publisher }}"
     offer     = "{{ specification.storage_image_reference.offer }}"
     sku       = "{{ specification.storage_image_reference.sku }}"
@@ -32,40 +41,16 @@ resource "azurerm_virtual_machine" "{{ specification.name }}" {
   }
   {%- endif %}
 
-  os_profile {
-    computer_name  = "{{ specification.hostname }}"
-    admin_username = "{{ specification.admin_username }}"
-    {%- if specification.os_type == "windows" %}
-    admin_password = "{{ specification.admin_password }}"
-    {%- endif %}
-    {%- if specification.storage_image_reference.offer == "RHEL" and specification.use_cloud_init_custom_data %}
-    custom_data    = file("${path.module}/cloud-config.yml")
-    {%- endif %}
+  os_disk {
+    name                 = "{{ specification.name }}-os-disk"
+    caching              = "{{ specification.storage_os_disk.caching }}"
+    storage_account_type = "{{ specification.storage_os_disk.managed_disk_type }}"
+    disk_size_gb         = {{ specification.storage_os_disk.disk_size_gb }}
   }
 
-  {%- if specification.os_type == "linux" %}
-  os_profile_linux_config {
-    disable_password_authentication = true
-    ssh_keys {
-      path     = "/home/{{ specification.admin_username }}/.ssh/authorized_keys"
-      key_data = file("{{ specification.public_key }}")
-    }
-  }
+  {%- if specification.storage_image_reference.offer == "RHEL" and specification.use_cloud_init_custom_data %}
+  custom_data = filebase64("${path.module}/cloud-config.yml")
   {%- endif %}
-
-  {%- if specification.os_type == "windows" %}
-  # windows specific stuff here maybe... hopefully never.
-  {%- endif %}
-
-  storage_os_disk {
-    name              = "{{ specification.name }}-os-disk"
-    caching           = "{{ specification.storage_os_disk.caching }}"
-    create_option     = "{{ specification.storage_os_disk.create_option }}"
-    disk_size_gb      = "{{ specification.storage_os_disk.disk_size_gb }}"
-    {%- if specification.storage_os_disk.managed %}
-    managed_disk_type = "{{ specification.storage_os_disk.managed_disk_type }}"
-    {%- endif %}
-  }
 
   tags = {
   {%- for tag in specification.tags %}
@@ -96,7 +81,7 @@ resource "azurerm_managed_disk" "{{ specification.name }}-data-disk-{{ loop.inde
   resource_group_name  = azurerm_resource_group.rg.name
   storage_account_type = "{{ disk.storage_account_type }}"
   create_option        = "Empty"
-  disk_size_gb         = "{{ disk.disk_size_gb }}"
+  disk_size_gb         = {{ disk.disk_size_gb }}
 
   tags = {
   {%- for tag in specification.tags %}
@@ -109,9 +94,11 @@ resource "azurerm_managed_disk" "{{ specification.name }}-data-disk-{{ loop.inde
 
 resource "azurerm_virtual_machine_data_disk_attachment" "{{ specification.name }}-disk-attachment-{{ loop.index0 }}" {
   managed_disk_id    = azurerm_managed_disk.{{ specification.name }}-data-disk-{{ loop.index0 }}.id
-  virtual_machine_id = azurerm_virtual_machine.{{ specification.name }}.id
-  lun                = "{{ loop.index0 }}"
+  virtual_machine_id = azurerm_linux_virtual_machine.{{ specification.name }}.id
+  lun                = {{ loop.index0 }}
   caching            = "ReadWrite"
 }
   {%- endfor %}
 {%- endif %}
+
+
